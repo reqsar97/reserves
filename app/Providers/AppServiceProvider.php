@@ -16,7 +16,7 @@ class AppServiceProvider extends ServiceProvider
     {
         //
         if (!\App::environment('local')) {
-             URL::forceRootUrl('https');
+             URL::forceRootUrl('https://young-chamber-26941.herokuapp.com/');
              }
 
     }
