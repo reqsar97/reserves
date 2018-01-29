@@ -1,0 +1,24 @@
+@import "~antd/dist/antd.css";
+
+.logo {
+    background: rgb(255, 255, 255);
+    margin: 16px;
+    padding-left: 20%;
+}
+
+.headerMenuItem {
+    float: right !important;
+}
+
+.loginFormItem {
+    margin-left: 30%;
+}
+
+.singleTable {
+    margin: 10px;
+    background-color: red;
+}
+
+.tableCard .ant-card-head {
+    background-color: red;
+}
