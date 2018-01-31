@@ -27,9 +27,12 @@ Route::middleware('api')->get('/hello_world', function () {
 Route::group(['middleware' => ['api','cors']], function () {
     Route::post('auth/register', 'Auth\ApiRegisterController@create');
     Route::post('auth/login', 'Auth\ApiAuthController@login');
-    Route::post('/reserves','ReserveController@store');
 });
 Route::group(['middleware' => ['jwt-auth', 'cors']], function () {
     Route::post('auth/user', 'Auth\ApiAuthController@getAuthUser');
     Route::post('auth/logout', 'Auth\ApiAuthController@logout');
+    Route::post('/reserves','ReserveController@store');
+    Route::post('/reserves/area/{id}', 'ReserveController@getTodayReservesByArea');
+    Route::post('/reserves/arrived/{reserve}', 'ReserveController@reserveArrived');
+    Route::post('/reserves/delete/{id}', 'ReserveController@reserveCancel');
 });

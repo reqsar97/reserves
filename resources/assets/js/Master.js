@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Layout, Menu, Icon } from "antd";
+import { Layout, Menu, Icon, notification } from "antd";
 const { Header, Content, Footer, Sider } = Layout;
 import { Route, Link, Redirect, Switch } from "react-router-dom";
 import { Progress } from "antd";
@@ -134,7 +134,16 @@ class Master extends Component {
             .post("/api/reserves", values)
             .then(response => {
                 console.log(response);
-                // this.history.push("/login");
+                notification.open({
+                    message: "Save Reserve",
+                    description: "Your reserve saved successfuly",
+                    icon: (
+                        <Icon
+                            type="smile-circle"
+                            style={{ color: "#108ee9" }}
+                        />
+                    )
+                });
             })
             .catch(error => {
                 // this.setState({ showProgres: false, progres: 0 });

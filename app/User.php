@@ -41,4 +41,9 @@ class User extends Authenticatable implements JWTSubject
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    //relations
+    public function reserves(){
+        return $this->hasMany('App\Reserve');
+    }
 }

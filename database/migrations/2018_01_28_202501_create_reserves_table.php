@@ -15,12 +15,14 @@ class CreateReservesTable extends Migration
     {
         Schema::create('reserves', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('user_id');
             $table->string('name', 100);
             $table->smallInteger('count');
             $table->dateTime('time');
-                $table->string('phone', 50);
+            $table->string('phone', 50);
             $table->smallInteger('area');
             $table->smallInteger('table');
+            $table->smallInteger('is_arrived');
             $table->timestamps();
         });
     }

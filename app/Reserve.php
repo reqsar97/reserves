@@ -7,6 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class Reserve extends Model
 {
     protected $fillable = [
-        'name', 'count', 'time', 'phone', 'area', 'table'
+        'name', 'count', 'time', 'phone', 'area', 'table', 'user_id', 'is_arrived'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
+
 }

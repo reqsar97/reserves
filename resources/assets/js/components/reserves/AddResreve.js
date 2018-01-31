@@ -1,5 +1,14 @@
 import React, { Component } from "react";
-import { Form, Input, Select, Button, DatePicker, TimePicker } from "antd";
+import {
+    Form,
+    Input,
+    Select,
+    Button,
+    DatePicker,
+    TimePicker,
+    notification,
+    Icon
+} from "antd";
 const FormItem = Form.Item;
 const Option = Select.Option;
 import axios from "axios";
@@ -20,10 +29,11 @@ class AddReserve extends Component {
                     ...fieldsValue,
                     "date-time-picker": fieldsValue["date-time-picker"].format(
                         "YYYY-MM-DD HH:mm:ss"
-                    )
+                    ),
+                    token: localStorage.getItem("token")
                 };
-                console.log("Received values of form: ", values);
                 this.props.addNewReserve(values);
+                // this.props.form.resetFields();
             }
         });
     }
@@ -53,14 +63,6 @@ class AddReserve extends Component {
                 }
             }
         };
-        const prefixSelector = getFieldDecorator("prefix", {
-            initialValue: "86"
-        })(
-            <Select style={{ width: 70 }}>
-                <Option value="86">+86</Option>
-                <Option value="87">+87</Option>
-            </Select>
-        );
         const config = {
             rules: [
                 {
@@ -105,12 +107,7 @@ class AddReserve extends Component {
                                 message: "Please input your phone number!"
                             }
                         ]
-                    })(
-                        <Input
-                            addonBefore={prefixSelector}
-                            style={{ width: "100%" }}
-                        />
-                    )}
+                    })(<Input style={{ width: "100%" }} />)}
                 </FormItem>
                 <FormItem {...formItemLayout} label="Select Area" hasFeedback>
                     {getFieldDecorator("area", {
@@ -122,10 +119,10 @@ class AddReserve extends Component {
                         ]
                     })(
                         <Select placeholder="Please select an area">
-                            <Option value="1">No Smoking</Option>
-                            <Option value="2">Smoking</Option>
-                            <Option value="3">Outside</Option>
-                            <Option value="4">Waiting List</Option>
+                            <Option value="0">No Smoking</Option>
+                            <Option value="1">Smoking</Option>
+                            <Option value="2">Outside</Option>
+                            <Option value="3">Waiting List</Option>
                         </Select>
                     )}
                 </FormItem>

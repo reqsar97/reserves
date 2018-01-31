@@ -19,6 +19,13 @@
     background-color: red;
 }
 
-.tableCard .ant-card-head {
-    background-color: red;
+.reservedTable .ant-card-head {
+    background-color: #52c41a;
+}
+.arrivedTable .ant-card-head {
+    background-color: #1890ff;
+}
+
+.reserveLate .ant-card-head {
+    background-color: #52c41a;
 }
