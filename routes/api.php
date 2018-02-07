@@ -32,7 +32,10 @@ Route::group(['middleware' => ['jwt-auth', 'cors']], function () {
     Route::post('auth/user', 'Auth\ApiAuthController@getAuthUser');
     Route::post('auth/logout', 'Auth\ApiAuthController@logout');
     Route::post('/reserves','ReserveController@store');
+    Route::get('/reserves/{id}', 'ReserveController@getById');
     Route::post('/reserves/area/{id}', 'ReserveController@getTodayReservesByArea');
     Route::post('/reserves/arrived/{reserve}', 'ReserveController@reserveArrived');
     Route::post('/reserves/delete/{id}', 'ReserveController@reserveCancel');
+    Route::post('/tables/{area}/{number}','TableController@tableOpen');
+    Route::put('/reserves/{reserve}', 'ReserveController@update');
 });

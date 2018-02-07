@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Table;
 
 class DatabaseSeeder extends Seeder
 {
@@ -11,6 +12,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(UsersTableSeeder::class);
+        for ($i=1; $i <= 30 ; $i++) {
+            # code...
+            Table::create([
+                "number" => $i,
+                "area" => 1,
+                "is_open" => 0
+            ]);
+        }
     }
 }

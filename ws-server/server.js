@@ -24,11 +24,9 @@ redis.psubscribe("*", function(err, count) {
 });
 
 redis.on("pmessage", function(pattern, channel, message) {
-    console.log(message);
     message = JSON.parse(message);
-    console.log(message);
-    io.emit(channel + ":" + message.event, message.data.reserve);
-    console.log(channel + ":" + message.event);
+    io.emit(channel + ":" + message.event, message.data.resource);
+    console.log(message.data.resource);
 });
 
 redis.on("error", function(err) {

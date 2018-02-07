@@ -9,15 +9,13 @@ use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
-
 use App\Reserve;
 
-class ReserveArrived implements ShouldBroadcast
+class ReserveUpdateEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $reserve;
-
     /**
      * Create a new event instance.
      *
@@ -35,9 +33,9 @@ class ReserveArrived implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return ['reserveArrived'];
+        return ['reserveUpdated'];
     }
-
+    
     public function broadcastAs()
     {
         return "reserve";

@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use App\Events\NewReserveAdded;
 use App\Events\ReserveArrived;
 use App\Events\ReserveCancelled;
+use App\Events\ReserveUpdateEvent;
 
 class ReserveController extends Controller
 {
@@ -56,6 +57,29 @@ class ReserveController extends Controller
             ->with('user')
             ->get();
         return response()->json(['status'=>'success', 'data'=>$todayReserves]);
+    }
+
+    public function getById($id)
+    {
+        $reserve = Reserve::find($id);
+
+        return response()->json(['status'=> 'success', 'data'=>$reserve]);
+    }
+
+    public function update(Reserve $reserve, Request $request)
+    {
+        $reserve->update([
+            'name'=>$request['name'],
+            'count'=>$request['count'],
+            'time'=>$request['date-time-picker'],
+            'phone'=>$request['phone'],
+            'area'=>$request['area'],
+            'table'=>$request['table'],
+            'is_arrived' => 0
+        ]);
+            
+        event(new ReserveUpdateEvent($reserve));
+        return response()->json(['status'=>'success']);
     }
 
 }

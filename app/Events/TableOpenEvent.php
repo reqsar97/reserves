@@ -9,23 +9,22 @@ use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use App\Table;
 
-use App\Reserve;
-
-class ReserveArrived implements ShouldBroadcast
+class TableOpenEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $reserve;
+    public $table;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(Reserve $reserve)
+    public function __construct(Table $table)
     {
-        $this->reserve = $reserve;
+        $this->table = $table;
     }
 
     /**
@@ -35,16 +34,17 @@ class ReserveArrived implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return ['reserveArrived'];
+        return ['tableOpen'];
     }
 
     public function broadcastAs()
     {
-        return "reserve";
+        return "table";
     }
 
     public function broadcastWith()
     {
-        return ["resource" => $this->reserve];
+        return ["resource" => $this->table];
     }
+
 }

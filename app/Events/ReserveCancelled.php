@@ -45,6 +45,6 @@ class ReserveCancelled implements ShouldBroadcast
 
     public function broadcastWith()
     {
-        return ["reserve" => $this->id];
+        return ["resource" => $this->id];
     }
 }

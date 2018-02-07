@@ -48,7 +48,7 @@ class NewReserveAdded implements ShouldBroadcast
 
     public function broadcastWith()
     {
-        return ["reserve" => $this->reserve];
+        return ["resource" => $this->reserve];
     }
 
 }
