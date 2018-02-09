@@ -44,7 +44,8 @@ class Master extends Component {
     this.state = {
       progres: 0,
       showProgres: false,
-      isLoged
+      isLoged,
+      redirectToLogin: false
     };
     //bind functions
     this.handleLogin = this.handleLogin.bind(this);
@@ -59,7 +60,7 @@ class Master extends Component {
         {...rest}
         render={props =>
           localStorage.getItem("isLoged") == "1" ? (
-            <Component {...props} />
+            <Component {...props} {...rest} />
           ) : (
             <Redirect
               to={{
@@ -119,10 +120,13 @@ class Master extends Component {
     axios
       .post("/api/auth/logout", value, config)
       .then(response => {
-        this.setState({ showProgres: false, progres: 0, isLoged: 0 });
+        this.setState({
+          showProgres: false,
+          progres: 0,
+          isLoged: 0
+        });
         localStorage.removeItem("token");
         localStorage.setItem("isLoged", 0);
-        this.history.push("/login");
       })
       .catch(error => {
         this.setState({ showProgres: false, progres: 0 });
@@ -138,7 +142,6 @@ class Master extends Component {
     axios
       .post("/api/reserves", values)
       .then(response => {
-        console.log(response);
         notification.open({
           message: "Save Reserve",
           description: "Your reserve saved successfuly",
@@ -152,6 +155,7 @@ class Master extends Component {
   }
 
   render() {
+    const { PrivateRoute } = this;
     return (
       <div>
         {this.state.showProgres && (
@@ -174,12 +178,17 @@ class Master extends Component {
                   minHeight: 360
                 }}
               >
-                <FadingRoute
+                <PrivateRoute
                   path="/reserves/create"
                   component={AddReserve}
                   addNewReserve={this.handleNewReserve}
                 />
-                <FadingRoute
+                <PrivateRoute
+                  exact
+                  path="/reserve/edit/:id"
+                  component={EditTable}
+                />
+                <PrivateRoute
                   path="/reserves/:area/:table"
                   component={AddReserve}
                   addNewReserve={this.handleNewReserve}
@@ -191,15 +200,14 @@ class Master extends Component {
                   component={Login}
                 />
                 <Route path="/register" component={Register} />
-                <this.PrivateRoute path="/home" component={Home} />
+                <PrivateRoute path="/home" component={Home} />
 
                 {/* <SmokingRoutesController path="/smoking" /> */}
-                <Route exact path="/smoking" component={Smoking} />
-                <Route path="/smoking/:id" component={EditTable} />
+                <PrivateRoute exact path="/smoking" component={Smoking} />
 
-                <Route path="/waiting-list" component={WaitingList} />
-                <Route path="/no-smoking" component={NoSmoking} />
-                <Route path="/outside" component={Outside} />
+                <PrivateRoute path="/waiting-list" component={WaitingList} />
+                <PrivateRoute path="/no-smoking" component={NoSmoking} />
+                <PrivateRoute path="/outside" component={Outside} />
               </div>
             </Content>
             <Footer style={{ textAlign: "center" }}>

@@ -1,13 +1,10 @@
 import React, { Component } from "react";
+import BaseArea from "./BaseArea";
 
-class Outside extends Component {
-    render() {
-        return (
-            <div>
-                <h1>Outside are</h1>
-            </div>
-        );
-    }
+class Outside extends BaseArea {
+  constructor(props) {
+    super(props, 2, "Outside");
+  }
 }
 
 export default Outside;

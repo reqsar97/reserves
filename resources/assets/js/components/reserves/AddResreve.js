@@ -32,6 +32,10 @@ class AddReserve extends Component {
           ),
           token: localStorage.getItem("token")
         };
+        const { params } = this.props.match;
+        if (params.table && params.area) {
+          this.props.history.goBack();
+        }
         this.props.addNewReserve(values);
         // this.props.form.resetFields();
       }

@@ -16,7 +16,7 @@ function Sidebar(props) {
       <div className="logo">
         <img src="/img/Logo-1.png" />
       </div>
-      <Menu theme="dark" mode="inline" defaultSelectedKeys={["2"]}>
+      <Menu theme="dark" mode="inline">
         <Menu.Item key="1">
           <Link to="/reserves/create">
             <Icon type="plus-circle-o" />

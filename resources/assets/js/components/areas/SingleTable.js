@@ -42,7 +42,7 @@ class SingleTable extends Component {
   }
 
   render() {
-    const { reserve } = this.props;
+    const { reserve, area } = this.props;
 
     let time = "";
     let reservedColor = "";
@@ -51,11 +51,22 @@ class SingleTable extends Component {
       <Icon onClick={this.handleReserveArrived} type="check" />
     );
     let edit = (
-      <Link to={`/reserves/1/${this.props.table}`}>
+      <Link to={`/reserves/${area}/${this.props.table}`}>
         <Button shape="circle" icon="user-add" />
       </Link>
     );
+    let deleteIcon = <Icon type="smile-o" />;
     if (reserve) {
+      deleteIcon = (
+        <Popconfirm
+          title="Are you sure？"
+          okText="Yes"
+          cancelText="No"
+          onConfirm={this.handleReserveCancel}
+        >
+          <Icon type="delete" />
+        </Popconfirm>
+      );
       let date = new Date(reserve.time);
       time = date.toLocaleString("ru", {
         hour: "numeric",
@@ -64,7 +75,7 @@ class SingleTable extends Component {
       let today = new Date();
       id = reserve.id;
       edit = (
-        <Link to={`/smoking/${id}`}>
+        <Link to={`/reserve/edit/${id}`}>
           <Button shape="circle" icon="edit" />
         </Link>
       );
@@ -95,18 +106,7 @@ class SingleTable extends Component {
             title={this.props.title}
             bordered={true}
             hoverable={true}
-            actions={[
-              iconReservArrived,
-              edit,
-              <Popconfirm
-                title="Are you sure？"
-                okText="Yes"
-                cancelText="No"
-                onConfirm={this.handleReserveCancel}
-              >
-                <Icon type="delete" />
-              </Popconfirm>
-            ]}
+            actions={[iconReservArrived, edit, deleteIcon]}
           >
             {reserve && (
               <div>

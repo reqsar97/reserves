@@ -1,13 +1,10 @@
 import React, { Component } from "react";
+import BaseArea from "./BaseArea";
 
-class NoSmoking extends Component {
-    render() {
-        return (
-            <div>
-                <h1>NoSmoking are</h1>
-            </div>
-        );
-    }
+class NoSmoking extends BaseArea {
+  constructor(props) {
+    super(props, 0, "NoSmoking");
+  }
 }
 
 export default NoSmoking;
