@@ -38,12 +38,17 @@ class BaseArea extends Component {
       if (this._mounted) {
         if (data.area == this.areaId) {
           const { reserves } = this.state;
+          let isNewReserve = true;
           const newReserves = reserves.map(value => {
             if (value.id == data.id) {
+              isNewReserve = false;
               return data;
             }
             return value;
           });
+          if(isNewReserve) {
+            newReserves.push(data);
+          }
           this.setState({ reserves: newReserves });
         }
       }
