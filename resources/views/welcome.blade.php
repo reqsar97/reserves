@@ -7,8 +7,8 @@
         <title>Laravel</title>
         <link href="{{asset('css/app.css')}}" rel="stylesheet" type="text/css">
         <style>
-            body > div,
-            body > div> div {
+            body > #root,
+            body > #root> div {
                 height: 100%;
             }
         </style>
