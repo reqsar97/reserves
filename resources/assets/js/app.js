@@ -11,8 +11,8 @@ import {
 import Master from "./Master";
 
 render(
-    <Router basename="/">
-        <Master/>
+    <Router>
+        <Route path='/' component={Master}/>
     </Router>
     ,
     document.getElementById("root")

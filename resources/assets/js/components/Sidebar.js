@@ -10,7 +10,6 @@ function Sidebar(props) {
       collapsedWidth="0"
       onCollapse={(collapsed, type) => {
         console.log(collapsed, type);
-        console.log("bob");
       }}
     >
       <div className="logo">

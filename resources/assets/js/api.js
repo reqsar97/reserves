@@ -1,5 +1,6 @@
 import openSocket from "socket.io-client";
-const socket = openSocket("http://212.92.98.211:8000");
+const host = process.env.NODE_ENV === 'production' ? "http://212.92.98.211:8000" : 'http://dargett.loc:8000';
+const socket = openSocket(host);
 
 function subscribeToAddReserve(cb) {
   socket.on("addReserve:reserve", data => cb(null, data));

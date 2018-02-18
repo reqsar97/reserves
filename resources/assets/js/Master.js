@@ -31,6 +31,8 @@ const FadingRoute = ({ component: Component, path, ...rest }) => (
   />
 );
 
+console.log("env: ",process.env);
+
 class Master extends Component {
   constructor(props) {
     let isLoged = 1;
@@ -93,7 +95,7 @@ class Master extends Component {
         const token = response.data.result.token;
         localStorage.setItem("token", token);
         localStorage.setItem("isLoged", 1);
-        history.push("/home");
+        history.push("/smoking");
       })
       .catch(error => {
         this.setState({ showProgres: false, progres: 0 });
@@ -127,6 +129,7 @@ class Master extends Component {
         });
         localStorage.removeItem("token");
         localStorage.setItem("isLoged", 0);
+        this.props.history.push('/login');
       })
       .catch(error => {
         this.setState({ showProgres: false, progres: 0 });
@@ -161,8 +164,8 @@ class Master extends Component {
         {this.state.showProgres && (
           <Progress percent={this.state.progres} showInfo={false} />
         )}
-        <Layout>
-          <Sidebar />
+        <Layout style={{height: '100%'}}>
+          {this.state.isLoged == 1 && <Sidebar />}
           <Layout>
             <Header style={{ background: "#fff", padding: 0 }}>
               {this.state.isLoged == 0 && <GuestMenu />}
@@ -174,8 +177,8 @@ class Master extends Component {
               <div
                 style={{
                   padding: 24,
-                  background: "#fff",
-                  minHeight: 360
+                  // minHeight: 659,
+                  height: '80%'
                 }}
               >
                 <PrivateRoute

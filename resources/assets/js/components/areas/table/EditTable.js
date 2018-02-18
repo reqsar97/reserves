@@ -146,7 +146,7 @@ class EditTable extends Component {
         </FormItem>
         <FormItem {...formItemLayout} label="Select Area" hasFeedback>
           {getFieldDecorator("area", {
-            initialValue: reserve.area,
+            initialValue: ""+reserve.area,
             rules: [
               {
                 required: true,

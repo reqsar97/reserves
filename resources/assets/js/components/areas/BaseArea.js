@@ -95,6 +95,7 @@ class BaseArea extends Component {
     axios
       .post(`/api/reserves/area/${this.areaId}`, data)
       .then(response => {
+        console.log(response);
         const data = response.data.data;
         this.setState({ reserves: data });
       })

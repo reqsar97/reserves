@@ -51,9 +51,10 @@ class ReserveController extends Controller
     public function getTodayReservesByArea($area)
     {
         $today = Carbon::today()->toDateTimeString();
-        // $todayReserves = Carbon::today()->toDateTimeString();
+        $tomorrow = Carbon::tomorrow()->toDateTimeString();
         $todayReserves = Reserve::where('area','=',$area)
             ->where('time','>=',$today)
+            ->where('time','<=',$tomorrow)            
             ->with('user')
             ->get();
         return response()->json(['status'=>'success', 'data'=>$todayReserves]);

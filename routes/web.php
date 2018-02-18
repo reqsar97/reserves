@@ -14,10 +14,3 @@
 Route::get('/{url}', function () {
     return view('welcome');
 })->where('url','[A-Za-z0-9\/-]*');
-
-Route::get('/mongo', function(){
-    // $users = DB::collection('users')->get();
-    // $manager = new MongoDB\Driver\Manager();
-    echo phpinfo();
-    return "a";
-});
