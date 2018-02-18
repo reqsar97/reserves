@@ -37,7 +37,7 @@ class AddReserve extends Component {
           this.props.history.goBack();
         }
         this.props.addNewReserve(values);
-        // this.props.form.resetFields();
+        this.props.form.resetFields();
       }
     });
   }
