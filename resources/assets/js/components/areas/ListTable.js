@@ -12,7 +12,7 @@ import {
   subscribeToUpdateReserve
 } from "../../api";
 
-class BaseArea extends Component {
+class ListTable extends Component {
   constructor(props, areaId, areaName) {
     super(props);
     this.state = {
@@ -122,12 +122,6 @@ class BaseArea extends Component {
         reservedTables["table_" + tableNumber] = reserves[i];
       }
     }
-    let title = "V";
-    if(this.areaId == 1){
-      title = "N"
-    }else if (this.areaId == 2) {
-      title = "D"
-    }
     return (
       <div>
         <Row gutter={12} className="tableRow" type="flex" justify="center">
@@ -143,7 +137,7 @@ class BaseArea extends Component {
                 table={n}
                 isOpen={tables[`${n}`]}
                 className="singleTable"
-                title={`${title} - ${n}`}
+                title={`Table - ${n}`}
                 reserve={reservedTables[`table_${n}`]}
               />
             );
@@ -214,4 +208,4 @@ class BaseArea extends Component {
   }
 }
 
-export default BaseArea;
+export default ListTable;

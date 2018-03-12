@@ -20,8 +20,9 @@ class authJWT
     {
         // dd($request->all());
         // dd($request->input('token'));
+        $token = $request->headers->all()['x-jwt-token'][0];
         try{
-            JWTAuth::setToken($request->input('token'));
+            JWTAuth::setToken($token);
             $user = JWTAuth::toUser();
         }catch (JWTException $e) {
             if($e instanceof \Tymon\JWTAuth\Exceptions\TokenExpiredException) {

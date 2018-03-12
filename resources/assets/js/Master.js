@@ -19,6 +19,7 @@ import Smoking from "./components/areas/Smoking";
 import NoSmoking from "./components/areas/NoSmoking";
 import Outside from "./components/areas/Outside";
 import WaitingList from "./components/areas/WaitingList";
+import AllReserves from "./components/areas/AllReserves";
 import EditTable from "./components/areas/table/EditTable";
 import AddReserve from "./components/reserves/AddResreve";
 
@@ -94,6 +95,7 @@ class Master extends Component {
         this.setState({ showProgres: false, progres: 0, isLoged: 1 });
         const token = response.data.result.token;
         localStorage.setItem("token", token);
+        window.axios.defaults.headers.common['X-JWT-TOKEN'] = token;
         localStorage.setItem("isLoged", 1);
         history.push("/smoking");
       })
@@ -173,7 +175,7 @@ class Master extends Component {
                 <UserMenu onLogout={this.handleLogout} />
               )}
             </Header>
-            <Content style={{ margin: "24px 16px 0" }}>
+            <Content className="add-content">
               <div
                 style={{
                   padding: 24,
@@ -209,6 +211,7 @@ class Master extends Component {
                 <PrivateRoute exact path="/smoking" component={Smoking} />
 
                 <PrivateRoute path="/waiting-list" component={WaitingList} />
+                <PrivateRoute path="/all-reserves" component={AllReserves} />
                 <PrivateRoute path="/no-smoking" component={NoSmoking} />
                 <PrivateRoute path="/outside" component={Outside} />
               </div>

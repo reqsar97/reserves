@@ -144,6 +144,13 @@ class EditTable extends Component {
             ]
           })(<Input style={{ width: "100%" }} />)}
         </FormItem>
+        <FormItem {...formItemLayout} label="Info">
+          {getFieldDecorator("info",{
+            initialValue: reserve.info,
+          })(<Input.TextArea autosize={{ minRows: 2, maxRows: 6 }}/>)
+
+          }
+        </FormItem>
         <FormItem {...formItemLayout} label="Select Area" hasFeedback>
           {getFieldDecorator("area", {
             initialValue: ""+reserve.area,

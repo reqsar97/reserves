@@ -13,7 +13,7 @@ function Sidebar(props) {
       }}
     >
       <div className="logo">
-        <img src="/img/Logo-1.png" />
+        <h2>Dargett Reserves</h2>
       </div>
       <Menu theme="dark" mode="inline">
         <Menu.Item key="1">
@@ -44,6 +44,12 @@ function Sidebar(props) {
           <Link to="/waiting-list">
             <Icon type="usergroup-add" />
             <span className="nav-text">Waiting list</span>
+          </Link>
+        </Menu.Item>
+        <Menu.Item key="6">
+          <Link to="/all-reserves">
+            <Icon type="star-o" />
+            <span className="nav-text">All reserves</span>
           </Link>
         </Menu.Item>
       </Menu>

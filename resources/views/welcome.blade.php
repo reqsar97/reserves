@@ -4,7 +4,8 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Laravel</title>
+        <title>Dargett reserves</title>
+        <link rel="shortcut icon" type="image/png" href="/img/Logo-1.png"/>
         <link href="{{asset('css/app.css')}}" rel="stylesheet" type="text/css">
         <style>
             body > #root,

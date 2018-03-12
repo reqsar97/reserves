@@ -13,6 +13,29 @@ use App\Events\ReserveUpdateEvent;
 class ReserveController extends Controller
 {
     //
+
+    public function index(Request $request){
+        
+        if(!isset($request->date)){
+            $reserves = Reserve::all();
+            return response()->json([
+                'status'=>'success',
+                'data'=> $reserves
+            ]);
+        }
+
+        $time = Carbon::createFromTimestamp($request->date/1000, 'Asia/Yerevan');
+        $startOfDay = $time->toDateTimeString();
+        $endOfDay = $time->endOfDay()->toDateTimeString();
+        $reserves = Reserve::where('time', '>=',$startOfDay)
+            ->where('time','<=', $endOfDay)
+            ->get();
+        return response()->json([
+            'status'=>'success',
+            'data'=> $reserves
+        ]);
+    }
+
     public function store(Request $request)
     {
         $reserve = auth()->user()->reserves()->create([
@@ -22,6 +45,7 @@ class ReserveController extends Controller
             'phone'=>$request['phone'],
             'area'=>$request['area'],
             'table'=>$request['table'],
+            'info' => $request['info'],
             'is_arrived' => 0
         ]);
         event(new NewReserveAdded($reserve));
@@ -50,8 +74,9 @@ class ReserveController extends Controller
 
     public function getTodayReservesByArea($area)
     {
-        $today = Carbon::today()->toDateTimeString();
-        $tomorrow = Carbon::tomorrow()->toDateTimeString();
+
+        $today = Carbon::today('Asia/Yerevan')->toDateTimeString();
+        $tomorrow = Carbon::tomorrow('Asia/Yerevan')->toDateTimeString();
         $todayReserves = Reserve::where('area','=',$area)
             ->where('time','>=',$today)
             ->where('time','<=',$tomorrow)            
@@ -76,6 +101,7 @@ class ReserveController extends Controller
             'phone'=>$request['phone'],
             'area'=>$request['area'],
             'table'=>$request['table'],
+            'info'=> $request['info'],
             'is_arrived' => 0
         ]);
             
