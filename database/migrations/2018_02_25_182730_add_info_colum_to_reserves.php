@@ -14,7 +14,7 @@ class AddInfoColumToReserves extends Migration
     public function up()
     {
         Schema::table('reserves', function($table) {
-            $table->string('info');
+            $table->string('info')->nullable();
         });
     }
 
