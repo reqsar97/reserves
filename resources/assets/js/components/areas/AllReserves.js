@@ -14,7 +14,8 @@ class AllReserves extends Component {
   constructor(props){
     super(props);
     this.state = {
-      reserves : []
+      reserves : [],
+      date: moment()
     };
     this.handleCancele = this.handleCancele.bind(this);
     this.handleChangeDate = this.handleChangeDate.bind(this);
@@ -70,7 +71,8 @@ class AllReserves extends Component {
 
   handleChangeDate(date){
     const now = date.startOf('day');
-    axios.get(`/api/reserves?date=${now}`)
+    this.setState({date: now}, () => {
+      axios.get(`/api/reserves?date=${now}`)
       .then((response) => {
         const { data:reserves } = response.data;
         console.log(reserves);
@@ -79,16 +81,22 @@ class AllReserves extends Component {
       .catch((err) => {
         console.log(err);
       })
+    })
   }
 
   render() {
-    const { reserves } = this.state;
+    const { reserves, date } = this.state;
     return (
       <div>
         <Row gutter={12} className="tableRow" type="flex" justify="center">
           <h2>AllReserves</h2>
           <Divider />
-          <DatePicker onChange={this.handleChangeDate} defaultValue={moment()} format={dateFormat} />
+          <DatePicker
+            onChange={this.handleChangeDate}
+            // defaultValue={date}
+            value={date}
+            format={dateFormat}
+            />
           <Button onClick={this.hadnleGetAllReserves}>
             Get all
           </Button>

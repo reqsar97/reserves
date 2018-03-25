@@ -15,6 +15,10 @@
   float: right !important;
 }
 
+.headerMenuItemAreas{
+  float: left !important;
+}
+
 .loginFormItem {
   margin-left: 30%;
 }
@@ -22,6 +26,10 @@
 .ant-card-head{
   height: 20px;
   text-align: center;  
+}
+
+.ant-card-actions{
+  background-color: cornflowerblue;
 }
 
 .ant-card-body {
@@ -45,9 +53,17 @@
   background-color: #1890ff;
 }
 
+.busyTable .ant-card-head {
+  background-color: #690981;
+}
+
 .reserveLate .ant-card-head {
   background-color: #df1022;
 }
 .tableOpen .ant-card-head {
   background-color: #fa8c16;
+}
+
+.forkTable .ant-card-head {
+  background-color: #084708;
 }

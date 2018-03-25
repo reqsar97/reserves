@@ -17,7 +17,7 @@ class ReserveController extends Controller
     public function index(Request $request){
         
         if(!isset($request->date)){
-            $reserves = Reserve::all();
+            $reserves = Reserve::orderBy('created_at', 'DESC')->get();
             return response()->json([
                 'status'=>'success',
                 'data'=> $reserves
@@ -29,6 +29,7 @@ class ReserveController extends Controller
         $endOfDay = $time->endOfDay()->toDateTimeString();
         $reserves = Reserve::where('time', '>=',$startOfDay)
             ->where('time','<=', $endOfDay)
+            ->orderBy('created_at')
             ->get();
         return response()->json([
             'status'=>'success',

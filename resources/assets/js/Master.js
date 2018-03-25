@@ -1,27 +1,26 @@
-import React, { Component } from "react";
-import { Layout, Menu, Icon, notification } from "antd";
+import React, { Component } from 'react';
+import { Layout, Menu, Icon, notification } from 'antd';
 const { Header, Content, Footer, Sider } = Layout;
-import { Route, Link, Redirect, Switch } from "react-router-dom";
-import { Progress } from "antd";
-import axios from "axios";
+import { Route, Link, Redirect, Switch } from 'react-router-dom';
+import { Progress } from 'antd';
+import axios from 'axios';
 
 //Custom components
-import Sidebar from "./components/Sidebar";
-import Login from "./components/auth/Login";
-import Register from "./components/auth/Register";
-import Home from "./components/Home";
-import GuestMenu from "./components/header/GuestMenu";
-import UserMenu from "./components/header/UserMenu";
+import Sidebar from './components/Sidebar';
+import Login from './components/auth/Login';
+import Register from './components/auth/Register';
+import Home from './components/Home';
+import GuestMenu from './components/header/GuestMenu';
+import UserMenu from './components/header/UserMenu';
 
 //areas
-import SmokingRoutesController from "./components/areas/SmokingRoutesController";
-import Smoking from "./components/areas/Smoking";
-import NoSmoking from "./components/areas/NoSmoking";
-import Outside from "./components/areas/Outside";
-import WaitingList from "./components/areas/WaitingList";
-import AllReserves from "./components/areas/AllReserves";
-import EditTable from "./components/areas/table/EditTable";
-import AddReserve from "./components/reserves/AddResreve";
+import Smoking from './components/areas/Smoking';
+import NoSmoking from './components/areas/NoSmoking';
+import Outside from './components/areas/Outside';
+import WaitingList from './components/areas/WaitingList';
+import AllReserves from './components/areas/AllReserves';
+import EditTable from './components/areas/table/EditTable';
+import AddReserve from './components/reserves/AddResreve';
 
 const FadingRoute = ({ component: Component, path, ...rest }) => (
   <Route
@@ -32,14 +31,14 @@ const FadingRoute = ({ component: Component, path, ...rest }) => (
   />
 );
 
-console.log("env: ",process.env);
+console.log('env: ',process.env);
 
 class Master extends Component {
   constructor(props) {
     let isLoged = 1;
     if (
-      localStorage.getItem("isLoged") == "0" ||
-      !localStorage.getItem("isLoged")
+      localStorage.getItem('isLoged') == '0' ||
+      !localStorage.getItem('isLoged')
     ) {
       isLoged = 0;
     }
@@ -62,12 +61,12 @@ class Master extends Component {
       <Route
         {...rest}
         render={props =>
-          localStorage.getItem("isLoged") == "1" ? (
+          localStorage.getItem('isLoged') == '1' ? (
             <Component {...props} {...rest} />
           ) : (
             <Redirect
               to={{
-                pathname: "/login",
+                pathname: '/login',
                 state: { from: props.location }
               }}
             />
@@ -90,14 +89,14 @@ class Master extends Component {
       }
     };
     axios
-      .post("/api/auth/login", value, config)
+      .post('/api/auth/login', value, config)
       .then(response => {
         this.setState({ showProgres: false, progres: 0, isLoged: 1 });
         const token = response.data.result.token;
-        localStorage.setItem("token", token);
+        localStorage.setItem('token', token);
         window.axios.defaults.headers.common['X-JWT-TOKEN'] = token;
-        localStorage.setItem("isLoged", 1);
-        history.push("/smoking");
+        localStorage.setItem('isLoged', 1);
+        history.push('/smoking');
       })
       .catch(error => {
         this.setState({ showProgres: false, progres: 0 });
@@ -118,19 +117,19 @@ class Master extends Component {
     };
 
     const value = {
-      token: localStorage.getItem("token")
+      token: localStorage.getItem('token')
     };
 
     axios
-      .post("/api/auth/logout", value, config)
+      .post('/api/auth/logout', value, config)
       .then(response => {
         this.setState({
           showProgres: false,
           progres: 0,
           isLoged: 0
         });
-        localStorage.removeItem("token");
-        localStorage.setItem("isLoged", 0);
+        localStorage.removeItem('token');
+        localStorage.setItem('isLoged', 0);
         this.props.history.push('/login');
       })
       .catch(error => {
@@ -145,12 +144,12 @@ class Master extends Component {
 
   handleNewReserve(values) {
     axios
-      .post("/api/reserves", values)
+      .post('/api/reserves', values)
       .then(response => {
         notification.open({
-          message: "Save Reserve",
-          description: "Your reserve saved successfuly",
-          icon: <Icon type="smile-circle" style={{ color: "#108ee9" }} />
+          message: 'Save Reserve',
+          description: 'Your reserve saved successfuly',
+          icon: <Icon type="smile-circle" style={{ color: '#108ee9' }} />
         });
       })
       .catch(error => {
@@ -169,7 +168,7 @@ class Master extends Component {
         <Layout style={{height: '100%'}}>
           {this.state.isLoged == 1 && <Sidebar />}
           <Layout>
-            <Header style={{ background: "#fff", padding: 0 }}>
+            <Header style={{ background: '#fff', padding: 0 }}>
               {this.state.isLoged == 0 && <GuestMenu />}
               {this.state.isLoged == 1 && (
                 <UserMenu onLogout={this.handleLogout} />
@@ -216,7 +215,7 @@ class Master extends Component {
                 <PrivateRoute path="/outside" component={Outside} />
               </div>
             </Content>
-            <Footer style={{ textAlign: "center" }}>
+            <Footer style={{ textAlign: 'center' }}>
               Dargett Reserves ©2018 Created by Karen
             </Footer>
           </Layout>

@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import { Row, Col, Divider } from "antd";
-import axios from "axios";
+import React, { Component } from 'react';
+import { Row, Divider } from 'antd';
+import axios from 'axios';
 //Custom components
-import SingleTable from "./SingleTable";
+import SingleTable from './SingleTable';
 //socket
 import {
   subscribeToAddReserve,
@@ -10,7 +10,7 @@ import {
   subscribeToReserveCancelled,
   subscribeToOpenTable,
   subscribeToUpdateReserve
-} from "../../api";
+} from '../../api';
 
 class BaseArea extends Component {
   constructor(props, areaId, areaName) {
@@ -83,9 +83,12 @@ class BaseArea extends Component {
       if (this._mounted) {
         if (data.area == this.areaId) {
           const { tables } = this.state;
-          let newTables = [...tables];
-          newTables[`${data.number}`] = data.is_open;
-
+          let newTables = tables.map((table => {
+            if(table.id == data.id){
+              return data;
+            }
+            return table;
+          }));
           this.setState({ tables: newTables });
         }
       }
@@ -95,12 +98,19 @@ class BaseArea extends Component {
   componentDidMount() {
     this._mounted = true;
     const data = {
-      token: localStorage.getItem("token")
+      token: localStorage.getItem('token')
     };
+    axios.get(`/api/tables/${this.areaId}`)
+      .then(response => {
+        const data = response.data;
+        this.setState({tables: data});
+      })
+      .catch(err => {
+        console.log(err);
+      });
     axios
       .post(`/api/reserves/area/${this.areaId}`, data)
       .then(response => {
-        console.log(response);
         const data = response.data.data;
         this.setState({ reserves: data });
       })
@@ -119,14 +129,14 @@ class BaseArea extends Component {
     if (reserves.length) {
       for (var i = 0; i < reserves.length; i++) {
         let tableNumber = reserves[i].table;
-        reservedTables["table_" + tableNumber] = reserves[i];
+        reservedTables['table_' + tableNumber] = reserves[i];
       }
     }
-    let title = "V";
+    let title = 'V';
     if(this.areaId == 1){
-      title = "N"
+      title = 'N';
     }else if (this.areaId == 2) {
-      title = "D"
+      title = 'D';
     }
     return (
       <div>
@@ -135,80 +145,22 @@ class BaseArea extends Component {
           <Divider />
         </Row>
         <Row gutter={12} className="tableRow" type="flex" justify="center">
-          {[1, 2, 3, 4, 5, 6].map(n => {
+          {tables.map(table => {
             return (
               <SingleTable
                 area={this.areaId}
-                key={n}
-                table={n}
-                isOpen={tables[`${n}`]}
+                key={table.number}
+                table={table.number}
+                forkTitle={table.fork_title ? table.fork_title : ''}
+                isOpen={table.is_open == 1}
+                isBusy={table.is_busy == 1}
                 className="singleTable"
-                title={`${title} - ${n}`}
-                reserve={reservedTables[`table_${n}`]}
+                title={`${title} - ${table.number}`}
+                reserve={reservedTables[`table_${table.number}`]}
               />
             );
           })}
-        </Row>
-        <Row gutter={12} className="tableRow" type="flex" justify="center">
-          {[7, 8, 9, 10, 11, 12].map(n => {
-            return (
-              <SingleTable
-                area={this.areaId}
-                key={n}
-                table={n}
-                isOpen={tables[`${n}`]}
-                className="singleTable"
-                title={`Table - ${n}`}
-                reserve={reservedTables[`table_${n}`]}
-              />
-            );
-          })}
-        </Row>
-        <Row gutter={12} className="tableRow" type="flex" justify="center">
-          {[13, 14, 15, 16, 17, 18].map(n => {
-            return (
-              <SingleTable
-                area={this.areaId}
-                key={n}
-                table={n}
-                isOpen={tables[`${n}`]}
-                className="singleTable"
-                title={`Table - ${n}`}
-                reserve={reservedTables[`table_${n}`]}
-              />
-            );
-          })}
-        </Row>
-        <Row gutter={12} className="tableRow" type="flex" justify="center">
-          {[19, 20, 21, 22, 23, 24].map(n => {
-            return (
-              <SingleTable
-                area={this.areaId}
-                key={n}
-                table={n}
-                isOpen={tables[`${n}`]}
-                className="singleTable"
-                title={`Table - ${n}`}
-                reserve={reservedTables[`table_${n}`]}
-              />
-            );
-          })}
-        </Row>
-        <Row gutter={12} className="tableRow" type="flex" justify="center">
-          {[25, 26, 27, 28, 29, 30].map(n => {
-            return (
-              <SingleTable
-                area={this.areaId}
-                key={n}
-                table={n}
-                isOpen={tables[`${n}`]}
-                className="singleTable"
-                title={`Table - ${n}`}
-                reserve={reservedTables[`table_${n}`]}
-              />
-            );
-          })}
-        </Row>
+        </Row>      
       </div>
     );
   }

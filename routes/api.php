@@ -38,5 +38,8 @@ Route::group(['middleware' => ['jwt-auth', 'cors']], function () {
     Route::post('/reserves/arrived/{reserve}', 'ReserveController@reserveArrived');
     Route::post('/reserves/delete/{id}', 'ReserveController@reserveCancel');
     Route::post('/tables/{area}/{number}','TableController@tableOpen');
+    Route::get('/tables/{area}', 'TableController@getTablesByAreq');
+    Route::put('/tables/busy/{area}/{table}', 'TableController@addBusyTable');
+    Route::put('/tables/fork/{area}/{table}', 'TableController@addForkTable');
     Route::put('/reserves/{reserve}', 'ReserveController@update');
 });

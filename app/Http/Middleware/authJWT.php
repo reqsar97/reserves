@@ -18,9 +18,12 @@ class authJWT
      */
     public function handle($request, Closure $next)
     {
-        // dd($request->all());
-        // dd($request->input('token'));
-        $token = $request->headers->all()['x-jwt-token'][0];
+        $header = $request->headers->all();
+        $token = '';
+        if(array_key_exists('x-jwt-token', $header)){
+            $token = $request->headers->all()['x-jwt-token'][0];
+        }
+        
         try{
             JWTAuth::setToken($token);
             $user = JWTAuth::toUser();
